@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pennywise/features/auth/views/auth_wrapper.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart'; // added dotenv import
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(); // load .env file
   await Supabase.initialize(
-    url: 'https://tvuyejtktobehgdyzner.supabase.co',
-    anonKey:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR2dXllanRrdG9iZWhnZHl6bmVyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE3OTc1MDIsImV4cCI6MjA1NzM3MzUwMn0.BCXa5nX_DJJAGeqjDWxceRWGFPcnYD5xoZCNlxGVkwI',
+    url: dotenv.env['SUPABASE_URL']!,
+    anonKey: dotenv.env['SUPABASE_ANON_KEY']!,
   );
   runApp(ProviderScope(child: MyApp()));
 }
